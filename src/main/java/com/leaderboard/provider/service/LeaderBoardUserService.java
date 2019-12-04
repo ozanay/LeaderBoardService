@@ -1,12 +1,23 @@
 package com.leaderboard.provider.service;
 
-import com.leaderboard.provider.model.User;
-
-import java.util.Collections;
 import java.util.List;
 
-public class LeaderBoardUserService {
-    public List<User> getUsers() {
-        return Collections.emptyList();
-    }
+import com.leaderboard.provider.model.User;
+
+/**
+ * This service is responsible to provide leaderboard user operations.
+ */
+public interface LeaderBoardUserService {
+    /**
+     * @return Ordered global leaderboard users.
+     */
+    List<User> getGlobalUsers();
+
+    /**
+     *
+     * @param countryIsoCode
+     *            According to ISO 3166-1 alpha-2 standards.
+     * @return Ordered country leaderboard users.
+     */
+    List<User> getCountryUsers(String countryIsoCode);
 }
