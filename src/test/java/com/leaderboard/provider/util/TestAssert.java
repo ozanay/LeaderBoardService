@@ -1,7 +1,6 @@
 package com.leaderboard.provider.util;
 
-import com.leaderboard.provider.controller.resource.LeaderBoardResource;
-import com.leaderboard.provider.model.User;
+import com.leaderboard.provider.model.LeaderBoardPlayer;
 
 import java.util.List;
 
@@ -28,9 +27,9 @@ public final class TestAssert {
         }
     }
 
-    public static void assertUsersAreInSameCountry(String countryIsoCode, List<User> users) {
-        assertFalse(users.isEmpty());
-        boolean areAllSame = users.stream().map(User::getCountry).allMatch(countryIsoCode::equals);
+    public static void assertUsersAreInSameCountry(String countryIsoCode, List<LeaderBoardPlayer> leaderBoardPlayers) {
+        assertFalse(leaderBoardPlayers.isEmpty());
+        boolean areAllSame = leaderBoardPlayers.stream().map(LeaderBoardPlayer::getCountry).allMatch(countryIsoCode::equals);
         assertTrue(areAllSame);
     }
 }

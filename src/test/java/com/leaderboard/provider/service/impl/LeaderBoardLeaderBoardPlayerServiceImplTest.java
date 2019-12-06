@@ -6,18 +6,18 @@ import static org.testng.Assert.assertTrue;
 import java.util.Collections;
 import java.util.List;
 
+import com.leaderboard.provider.model.LeaderBoardPlayer;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.leaderboard.provider.model.User;
-import com.leaderboard.provider.persistence.LeaderBoardUserRepository;
+import com.leaderboard.provider.persistence.repository.LeaderBoardUserRepository;
 import com.leaderboard.provider.service.LeaderBoardUserService;
 import com.leaderboard.provider.util.TestAssert;
 import com.leaderboard.provider.util.TestUtil;
 
-public class LeaderBoardUserServiceImplTest {
+public class LeaderBoardLeaderBoardPlayerServiceImplTest {
     @Mock
     private LeaderBoardUserRepository leaderBoardUserRepository;
 
@@ -38,10 +38,10 @@ public class LeaderBoardUserServiceImplTest {
         when(leaderBoardUserRepository.getUsers()).thenReturn(Collections.emptyList());
 
         // When
-        List<User> globalUsers = sut.getGlobalUsers();
+        List<LeaderBoardPlayer> globalLeaderBoardPlayers = sut.getGlobalUsers();
 
         // Then
-        assertTrue(globalUsers.isEmpty());
+        assertTrue(globalLeaderBoardPlayers.isEmpty());
     }
 
     @Test
@@ -50,10 +50,10 @@ public class LeaderBoardUserServiceImplTest {
         when(leaderBoardUserRepository.getUsers()).thenReturn(TestUtil.getOrderedUsers());
 
         // When
-        List<User> users = sut.getGlobalUsers();
+        List<LeaderBoardPlayer> leaderBoardPlayers = sut.getGlobalUsers();
 
         // Then
-        TestAssert.assertPointsAreDescending(TestUtil.getUserPoints(users));
+        TestAssert.assertPointsAreDescending(TestUtil.getUserPoints(leaderBoardPlayers));
     }
 
     @Test
@@ -62,10 +62,10 @@ public class LeaderBoardUserServiceImplTest {
         when(leaderBoardUserRepository.getUsers()).thenReturn(TestUtil.getOrderedUsers());
 
         // When
-        List<User> users = sut.getGlobalUsers();
+        List<LeaderBoardPlayer> leaderBoardPlayers = sut.getGlobalUsers();
 
         // Then
-        TestAssert.assertRanksAreAscendingByOne(TestUtil.getUserRanks(users));
+        TestAssert.assertRanksAreAscendingByOne(TestUtil.getUserRanks(leaderBoardPlayers));
     }
 
     @Test
@@ -74,10 +74,10 @@ public class LeaderBoardUserServiceImplTest {
         when(leaderBoardUserRepository.getUsers()).thenReturn(Collections.emptyList());
 
         // When
-        List<User> users = sut.getCountryUsers(countryIsoCode);
+        List<LeaderBoardPlayer> leaderBoardPlayers = sut.getCountryUsers(countryIsoCode);
 
         // Then
-        assertTrue(users.isEmpty());
+        assertTrue(leaderBoardPlayers.isEmpty());
     }
 
     @Test
@@ -87,10 +87,10 @@ public class LeaderBoardUserServiceImplTest {
                         .thenReturn(TestUtil.getUsersWithAscendingAnyRanks(countryIsoCode));
 
         // When
-        List<User> users = sut.getCountryUsers(countryIsoCode);
+        List<LeaderBoardPlayer> leaderBoardPlayers = sut.getCountryUsers(countryIsoCode);
 
         // Then
-        TestAssert.assertUsersAreInSameCountry(countryIsoCode, users);
+        TestAssert.assertUsersAreInSameCountry(countryIsoCode, leaderBoardPlayers);
     }
 
     @Test
@@ -100,10 +100,10 @@ public class LeaderBoardUserServiceImplTest {
                 .thenReturn(TestUtil.getUsersWithAscendingAnyRanks(countryIsoCode));
 
         // When
-        List<User> users = sut.getCountryUsers(countryIsoCode);
+        List<LeaderBoardPlayer> leaderBoardPlayers = sut.getCountryUsers(countryIsoCode);
 
         // Then
-        TestAssert.assertPointsAreDescending(TestUtil.getUserPoints(users));
+        TestAssert.assertPointsAreDescending(TestUtil.getUserPoints(leaderBoardPlayers));
     }
 
     @Test
@@ -113,9 +113,9 @@ public class LeaderBoardUserServiceImplTest {
                 .thenReturn(TestUtil.getUsersWithAscendingAnyRanks(countryIsoCode));
 
         // When
-        List<User> users = sut.getCountryUsers(countryIsoCode);
+        List<LeaderBoardPlayer> leaderBoardPlayers = sut.getCountryUsers(countryIsoCode);
 
         // Then
-        TestAssert.assertRanksAreAscendingByOne(TestUtil.getUserRanks(users));
+        TestAssert.assertRanksAreAscendingByOne(TestUtil.getUserRanks(leaderBoardPlayers));
     }
 }

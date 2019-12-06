@@ -1,6 +1,5 @@
-package com.leaderboard.provider.controller.resource;
+package com.leaderboard.provider.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,10 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class LeaderBoardResource {
+public class LeaderBoardPlayer {
+    private String id;
     private int rank;
     private int points;
-    @JsonProperty("display_name")
     private String displayName;
     private String country;
 }

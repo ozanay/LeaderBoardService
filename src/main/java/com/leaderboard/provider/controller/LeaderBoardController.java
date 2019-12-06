@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.leaderboard.provider.config.LeaderBoardConversionService;
-import com.leaderboard.provider.controller.resource.LeaderBoardResource;
-import com.leaderboard.provider.model.User;
+import com.leaderboard.provider.controller.resource.LeaderBoardPlayerResource;
+import com.leaderboard.provider.model.LeaderBoardPlayer;
 import com.leaderboard.provider.service.LeaderBoardUserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -37,23 +37,23 @@ public class LeaderBoardController {
     @GetMapping(value = "/leaderboard", produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get global leaderboard.")
-    public ResponseEntity<List<LeaderBoardResource>> getGlobalLeaderBoard() {
+    public ResponseEntity<List<LeaderBoardPlayerResource>> getGlobalLeaderBoard() {
         log.info("Getting global leaderboard...");
-        List<User> leaderBoardUsers = leaderBoardUserService.getGlobalUsers();
-        List<LeaderBoardResource> leaderBoardResources = conversionService.convertToList(leaderBoardUsers,
-                        LeaderBoardResource.class);
+        List<LeaderBoardPlayer> leaderBoardLeaderBoardPlayers = leaderBoardUserService.getGlobalUsers();
+        List<LeaderBoardPlayerResource> leaderBoardPlayerResources = conversionService.convertToList(leaderBoardLeaderBoardPlayers,
+                        LeaderBoardPlayerResource.class);
         log.info("Getting global leaderboard finished successfully.");
-        return ResponseEntity.ok(leaderBoardResources);
+        return ResponseEntity.ok(leaderBoardPlayerResources);
     }
 
     @GetMapping(value = "/leaderboard/{countryIsoCode}", produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get country leaderboard.")
-    public ResponseEntity<List<LeaderBoardResource>> getCountryLeaderBoard(@PathVariable("countryIsoCode") @Parameter(
+    public ResponseEntity<List<LeaderBoardPlayerResource>> getCountryLeaderBoard(@PathVariable("countryIsoCode") @Parameter(
                     required = true,
                     description = "Country iso code according to ISO 3166-1 alpha-2 standards.") String countryIsoCode) {
         log.info("Getting country leaderboard...");
-        ResponseEntity<List<LeaderBoardResource>> responseEntity = IsoCountyUtil.isValidIsoCountryCode(countryIsoCode)
+        ResponseEntity<List<LeaderBoardPlayerResource>> responseEntity = IsoCountyUtil.isValidIsoCountryCode(countryIsoCode)
                         ? getCountryLeaderBoardUsersResponse(countryIsoCode)
                         : badRequestResponse(countryIsoCode);
 
@@ -61,16 +61,16 @@ public class LeaderBoardController {
         return responseEntity;
     }
 
-    private ResponseEntity<List<LeaderBoardResource>> getCountryLeaderBoardUsersResponse(String countryIsoCode) {
+    private ResponseEntity<List<LeaderBoardPlayerResource>> getCountryLeaderBoardUsersResponse(String countryIsoCode) {
         log.info("Given country iso code <{}> is valid.", countryIsoCode);
-        List<User> countryUsers = leaderBoardUserService.getCountryUsers(countryIsoCode);
-        List<LeaderBoardResource> countryLeaderBoardResources = conversionService.convertToList(countryUsers,
-                        LeaderBoardResource.class);
+        List<LeaderBoardPlayer> countryLeaderBoardPlayers = leaderBoardUserService.getCountryUsers(countryIsoCode);
+        List<LeaderBoardPlayerResource> countryLeaderBoardPlayerResources = conversionService.convertToList(countryLeaderBoardPlayers,
+                        LeaderBoardPlayerResource.class);
         log.info("Country users are obtained.");
-        return ResponseEntity.ok(countryLeaderBoardResources);
+        return ResponseEntity.ok(countryLeaderBoardPlayerResources);
     }
 
-    private ResponseEntity<List<LeaderBoardResource>> badRequestResponse(String countryIsoCode) {
+    private ResponseEntity<List<LeaderBoardPlayerResource>> badRequestResponse(String countryIsoCode) {
         log.info("Given country iso code <{}> is invalid.", countryIsoCode);
         return ResponseEntity.badRequest().build();
     }

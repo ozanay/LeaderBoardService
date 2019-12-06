@@ -2,7 +2,7 @@ package com.leaderboard.provider.service;
 
 import java.util.List;
 
-import com.leaderboard.provider.model.User;
+import com.leaderboard.provider.model.LeaderBoardPlayer;
 
 /**
  * This service is responsible to provide leaderboard user operations.
@@ -11,7 +11,7 @@ public interface LeaderBoardUserService {
     /**
      * @return Ordered global leaderboard users.
      */
-    List<User> getGlobalUsers();
+    List<LeaderBoardPlayer> getGlobalUsers();
 
     /**
      *
@@ -19,5 +19,5 @@ public interface LeaderBoardUserService {
      *            According to ISO 3166-1 alpha-2 standards.
      * @return Ordered country leaderboard users.
      */
-    List<User> getCountryUsers(String countryIsoCode);
+    List<LeaderBoardPlayer> getCountryUsers(String countryIsoCode);
 }
