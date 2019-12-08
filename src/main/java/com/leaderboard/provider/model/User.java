@@ -1,16 +1,18 @@
 package com.leaderboard.provider.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Setter
 @Builder
-public class LeaderBoardPlayer {
+@NoArgsConstructor
+@AllArgsConstructor
+public class User {
     private String id;
-    private int rank;
-    private int points;
     private String displayName;
     private String country;
+    private String name;
+    private String surname;
 }

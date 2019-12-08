@@ -14,14 +14,14 @@ import org.springframework.http.ResponseEntity;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.leaderboard.provider.controller.resource.LeaderBoardPlayerResource;
-import com.leaderboard.provider.service.LeaderBoardUserService;
+import com.leaderboard.provider.controller.resource.LeaderBoardResource;
+import com.leaderboard.provider.service.LeaderBoardScoreService;
 import com.leaderboard.provider.util.TestAssert;
 import com.leaderboard.provider.util.TestUtil;
 
 public class LeaderBoardControllerTest {
     @Mock
-    private LeaderBoardUserService leaderBoardUserService;
+    private LeaderBoardScoreService leaderBoardScoreService;
 
     private LeaderBoardController sut;
     private String countryIsoCode;
@@ -31,16 +31,16 @@ public class LeaderBoardControllerTest {
         MockitoAnnotations.initMocks(this);
 
         countryIsoCode = TestUtil.getRandomCountry();
-        sut = new LeaderBoardController(leaderBoardUserService, TestUtil.conversionService());
+        sut = new LeaderBoardController(leaderBoardScoreService, TestUtil.conversionService());
     }
 
     @Test
     public void should_get_empty_global_leaderboard_if_no_user_exists() {
         // Given
-        when(leaderBoardUserService.getGlobalUsers()).thenReturn(Collections.emptyList());
+        when(leaderBoardScoreService.getGlobalScores()).thenReturn(Collections.emptyList());
 
         // When
-        ResponseEntity<List<LeaderBoardPlayerResource>> response = sut.getGlobalLeaderBoard();
+        ResponseEntity<List<LeaderBoardResource>> response = sut.getGlobalLeaderBoard();
 
         // Then
         assertTrue(response.getBody().isEmpty());
@@ -49,10 +49,10 @@ public class LeaderBoardControllerTest {
     @Test
     public void should_get_global_leaderboard_according_to_descending_points() {
         // Given
-        when(leaderBoardUserService.getGlobalUsers()).thenReturn(TestUtil.getOrderedUsers());
+//        when(leaderBoardScoreService.getGlobalScores()).thenReturn(TestUtil.getOrderedUsers());
 
         // When
-        ResponseEntity<List<LeaderBoardPlayerResource>> response = sut.getGlobalLeaderBoard();
+        ResponseEntity<List<LeaderBoardResource>> response = sut.getGlobalLeaderBoard();
 
         // Then
         TestAssert.assertPointsAreDescending(TestUtil.getLeaderBoardResourcePoints(response.getBody()));
@@ -61,10 +61,10 @@ public class LeaderBoardControllerTest {
     @Test
     public void should_get_global_leaderboard_according_to_ascending_ranks_by_one() {
         // Given
-        when(leaderBoardUserService.getGlobalUsers()).thenReturn(TestUtil.getOrderedUsers());
+//        when(leaderBoardScoreService.getGlobalScores()).thenReturn(TestUtil.getOrderedUsers());
 
         // When
-        ResponseEntity<List<LeaderBoardPlayerResource>> response = sut.getGlobalLeaderBoard();
+        ResponseEntity<List<LeaderBoardResource>> response = sut.getGlobalLeaderBoard();
 
         // Then
         TestAssert.assertRanksAreAscendingByOne(TestUtil.getLeaderBoardResourceRanks(response.getBody()));
@@ -76,7 +76,7 @@ public class LeaderBoardControllerTest {
         String invalidIsoCode = "invalid";
 
         // When
-        ResponseEntity<List<LeaderBoardPlayerResource>> response = sut.getCountryLeaderBoard(invalidIsoCode);
+        ResponseEntity<List<LeaderBoardResource>> response = sut.getCountryLeaderBoard(invalidIsoCode);
 
         // Then
         assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
@@ -85,10 +85,10 @@ public class LeaderBoardControllerTest {
     @Test
     public void should_get_empty_country_leaderboard_if_no_user_exists() {
         // Given
-        when(leaderBoardUserService.getCountryUsers(countryIsoCode)).thenReturn(Collections.emptyList());
+        when(leaderBoardScoreService.getCountryScores(countryIsoCode)).thenReturn(Collections.emptyList());
 
         // When
-        ResponseEntity<List<LeaderBoardPlayerResource>> response = sut.getCountryLeaderBoard(countryIsoCode);
+        ResponseEntity<List<LeaderBoardResource>> response = sut.getCountryLeaderBoard(countryIsoCode);
 
         // Then
         assertTrue(response.getBody().isEmpty());
@@ -97,11 +97,11 @@ public class LeaderBoardControllerTest {
     @Test
     public void should_get_country_leaderboard_according_to_descending_points() {
         // Given
-        when(leaderBoardUserService.getCountryUsers(countryIsoCode))
-                        .thenReturn(TestUtil.getOrderedUsers(countryIsoCode));
+//        when(leaderBoardScoreService.getCountryScores(countryIsoCode))
+//                        .thenReturn(TestUtil.getOrderedUsers(countryIsoCode));
 
         // When
-        ResponseEntity<List<LeaderBoardPlayerResource>> response = sut.getCountryLeaderBoard(countryIsoCode);
+        ResponseEntity<List<LeaderBoardResource>> response = sut.getCountryLeaderBoard(countryIsoCode);
 
         // Then
         TestAssert.assertPointsAreDescending(TestUtil.getLeaderBoardResourcePoints(response.getBody()));
@@ -110,11 +110,11 @@ public class LeaderBoardControllerTest {
     @Test
     public void should_get_country_leaderboard_according_to_ascending_ranks_by_one() {
         // Given
-        when(leaderBoardUserService.getCountryUsers(countryIsoCode))
-                        .thenReturn(TestUtil.getOrderedUsers(countryIsoCode));
+//        when(leaderBoardScoreService.getCountryScores(countryIsoCode))
+//                        .thenReturn(TestUtil.getOrderedUsers(countryIsoCode));
 
         // When
-        ResponseEntity<List<LeaderBoardPlayerResource>> response = sut.getCountryLeaderBoard(countryIsoCode);
+        ResponseEntity<List<LeaderBoardResource>> response = sut.getCountryLeaderBoard(countryIsoCode);
 
         // Then
         TestAssert.assertRanksAreAscendingByOne(TestUtil.getLeaderBoardResourceRanks(response.getBody()));

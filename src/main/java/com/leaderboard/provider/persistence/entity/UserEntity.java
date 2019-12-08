@@ -1,32 +1,33 @@
 package com.leaderboard.provider.persistence.entity;
 
-import javax.persistence.*;
-
-import org.hibernate.annotations.GenericGenerator;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
-@Entity(name = "leaderboard")
+import javax.persistence.*;
+
+@Entity(name = "users")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LeaderBoardEntity {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String id;
 
     @Column
-    private int points;
+    private String displayName;
 
     @Column
-    private long timestamp;
+    private String country;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "player_id")
-    private PlayerEntity player;
+    @Column
+    private String name;
+
+    @Column
+    private String surname;
 }

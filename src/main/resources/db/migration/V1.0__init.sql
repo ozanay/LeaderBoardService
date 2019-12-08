@@ -1,21 +1,22 @@
-create table if not exists leaderBoardPlayers(
+create table if not exists users
+(
     id character varying(255) primary key,
-    display_name character varying(255) not null,
+    display_name character varying(255) not null unique,
     name character varying(255),
     surname character varying(255),
     country character varying(5) not null
 );
 
-create table if not exists leaderboard
+create table if not exists scores
 (
     id character varying(255) not null primary key,
-    points integer not null,
-    player_id character varying(255) not null,
+    score_value double precision not null,
+    user_id character varying(255) not null,
     timestamp bigint,
-    constraint leaderboard_player_id_fk foreign key (player_id)
-        references leaderBoardPlayers (id) match simple
+    constraint leaderboard_user_id_fk foreign key (user_id)
+        references users (id) match simple
         on update no action on delete no action
 );
 
-create index leaderboard_index on leaderboard(points desc nulls last);
-cluster leaderboard using leaderboard_index
+create index leaderboard_index on scores(score_value desc nulls last, user_id);
+cluster scores using leaderboard_index

@@ -1,7 +1,5 @@
 package com.leaderboard.provider.util;
 
-import com.leaderboard.provider.model.LeaderBoardPlayer;
-
 import java.util.List;
 
 import static org.testng.Assert.*;
@@ -27,9 +25,9 @@ public final class TestAssert {
         }
     }
 
-    public static void assertUsersAreInSameCountry(String countryIsoCode, List<LeaderBoardPlayer> leaderBoardPlayers) {
-        assertFalse(leaderBoardPlayers.isEmpty());
-        boolean areAllSame = leaderBoardPlayers.stream().map(LeaderBoardPlayer::getCountry).allMatch(countryIsoCode::equals);
-        assertTrue(areAllSame);
-    }
+//    public static void assertUsersAreInSameCountry(String countryIsoCode, List<LeaderBoardPlayer> leaderBoardPlayers) {
+//        assertFalse(leaderBoardPlayers.isEmpty());
+//        boolean areAllSame = leaderBoardPlayers.stream().map(LeaderBoardPlayer::getCountry).allMatch(countryIsoCode::equals);
+//        assertTrue(areAllSame);
+//    }
 }
