@@ -5,18 +5,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import java.util.List;
 import java.util.Locale;
 
-import com.leaderboard.provider.controller.resource.ScoreWorthResource;
-import com.leaderboard.provider.controller.resource.UserResource;
-import com.leaderboard.provider.exception.BadRequestException;
-import com.leaderboard.provider.model.LeaderBoardScore;
-import com.leaderboard.provider.model.Score;
-import com.leaderboard.provider.model.ScoreWorth;
-import com.leaderboard.provider.util.IsoCountyUtil;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.info.Info;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +12,20 @@ import org.springframework.web.bind.annotation.*;
 
 import com.leaderboard.provider.config.LeaderBoardConversionService;
 import com.leaderboard.provider.controller.resource.LeaderBoardResource;
+import com.leaderboard.provider.controller.resource.ScoreWorthResource;
+import com.leaderboard.provider.controller.resource.UserResource;
+import com.leaderboard.provider.exception.BadRequestException;
+import com.leaderboard.provider.model.LeaderBoardScore;
+import com.leaderboard.provider.model.Score;
+import com.leaderboard.provider.model.ScoreWorth;
 import com.leaderboard.provider.service.LeaderBoardScoreService;
+import com.leaderboard.provider.util.IsoCountyUtil;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.info.Info;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -71,7 +71,7 @@ public class LeaderBoardController {
 
     @PostMapping(value = "/score/submit", produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Submits the score of given player.")
+    @Operation(summary = "Submits the score of given user and returns cumulative score of user.")
     public ResponseEntity<ScoreWorthResource> submitScore(@RequestBody ScoreWorthResource submitResource) {
         log.info("Submitting score for user <{}>", submitResource.getUserId());
         ScoreWorth scoreWorth = conversionService.convert(submitResource, ScoreWorth.class);

@@ -1,0 +1,181 @@
+{
+	"id": "a9f87b6a-73b9-495b-8268-33369af444d5",
+	"name": "LeaderBoard",
+	"description": "",
+	"auth": null,
+	"events": null,
+	"variables": [],
+	"order": [
+		"df6d62e5-80c4-4842-8bb7-300c5c668e97",
+		"f929b261-015f-45d5-a46f-7e7872534f05",
+		"484f44f9-02e1-4ccb-bddd-add5ceacb2fa",
+		"1c160709-80c4-4eee-9768-f46235006c72",
+		"a4eba474-392a-4fe9-9f16-55c5951ef89b"
+	],
+	"folders_order": [],
+	"protocolProfileBehavior": {},
+	"folders": [],
+	"requests": [
+		{
+			"id": "1c160709-80c4-4eee-9768-f46235006c72",
+			"name": "GetGlobalLeaderBoard",
+			"url": "http://{{applicationUrl}}:8080/leaderboard",
+			"description": "",
+			"data": null,
+			"dataOptions": null,
+			"dataMode": null,
+			"headerData": null,
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": null,
+			"folder": null,
+			"pathVariables": {}
+		},
+		{
+			"id": "484f44f9-02e1-4ccb-bddd-add5ceacb2fa",
+			"name": "SubmitScore",
+			"url": "http://{{applicationUrl}}:8080/score/submit",
+			"description": "",
+			"data": [],
+			"dataOptions": {
+				"raw": {
+					"language": "json"
+				}
+			},
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"type": "text"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fda76600-0b85-40dd-abd1-44d0b00773e6",
+						"exec": [
+							" "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\n\t\"score_worth\": {{$randomInt}},\n\t\"user_id\": \"{{userId}}\",\n\t\"timestamp\": \"{{$timestamp}}\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "a4eba474-392a-4fe9-9f16-55c5951ef89b",
+			"name": "GetCountryLeaderBoard",
+			"url": "http://{{applicationUrl}}:8080/leaderboard/{{country}}",
+			"description": "",
+			"data": null,
+			"dataOptions": null,
+			"dataMode": null,
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "df6d62e5-80c4-4842-8bb7-300c5c668e97",
+			"name": "SubmitUsers",
+			"url": "http://{{applicationUrl}}:8080/users",
+			"description": "",
+			"data": [],
+			"dataOptions": {
+				"raw": {
+					"language": "json"
+				}
+			},
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"type": "text"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": null,
+			"folder": null,
+			"rawModeData": "[\n\t{\n\t\t\"name\": \"1\",\n    \t\"surname\": \"1\",\n    \t\"displayName\": \"11\",\n    \t\"country\": \"tr\"\n\t},\n\t{\n\t\t\"name\": \"2\",\n    \t\"surname\": \"2\",\n    \t\"displayName\": \"22\",\n    \t\"country\": \"us\"\n\t},\n\t{\n\t\t\"name\": \"3\",\n    \t\"surname\": \"3\",\n    \t\"displayName\": \"3\",\n    \t\"country\": \"fr\"\n\t},\n\t{\n\t\t\"name\": \"4\",\n    \t\"surname\": \"4\",\n    \t\"displayName\": \"44\",\n    \t\"country\": \"tr\"\n\t},\n\t{\n\t\t\"name\": \"5\",\n    \t\"surname\": \"5\",\n    \t\"displayName\": \"55\",\n    \t\"country\": \"ru\"\n\t}\n]",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "f929b261-015f-45d5-a46f-7e7872534f05",
+			"name": "SubmitSingleUser",
+			"url": "http://{{applicationUrl}}:8080/user",
+			"description": "",
+			"data": [],
+			"dataOptions": {
+				"raw": {
+					"language": "json"
+				}
+			},
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"description": "",
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"type": "text",
+					"value": "application/json"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cfaac33b-b348-4efb-9884-982318980d9b",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"userId\", jsonData.user_id);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "029d5b28-66d1-428d-8289-470c353015f4",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\n\t\"name\": \"{{$randomFirstName}}\",\n    \"surname\": \"single\",\n    \"displayName\": \"{{$randomFirstName}}\",\n    \"country\": \"tr\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		}
+	]
+}
